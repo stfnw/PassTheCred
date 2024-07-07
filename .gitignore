@@ -1,0 +1,6 @@
+*.exe
+*.dll
+*.o
+tags
+cscope.out
+PassTheTicket.inc
