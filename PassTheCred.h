@@ -112,7 +112,7 @@ typedef struct _LSASS_CONTEXT
 #define INITIALIZATION_VECTOR_LENGTH 16
 #define SHA_DIGEST_LENGTH 20
 
-// A key as used for encryption/decryption by this tools.
+// A key as used for encryption/decryption by this tool.
 // Taken verbatim from mimikatz.
 typedef struct _KIWI_BCRYPT_GEN_KEY
 {

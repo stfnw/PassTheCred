@@ -18,7 +18,7 @@ int wmain(int argc, wchar_t *argv[])
 }
 
 // A note regarding API choice in this implementation:
-// Mimikatz directly uses quite a view native APIs / syscalls in ntdll, some of
+// Mimikatz directly uses quite a few native APIs / syscalls in ntdll, some of
 // them undocumented. While this is stealthier (fewer imports) and therefore
 // better in a real-world setting, it also sometimes makes the code more
 // verbose and harder to read/follow. For clarity, in this project sometimes I
@@ -431,12 +431,12 @@ VOID AcquireLSA(OUT PLSASS_CONTEXT pCtx, OUT PLSA_CRYPTO_MATERIAL pLsaCrypto)
     // spread out in mimikatz, due to its generic nature and many supported
     // functions. At this point (line 240ff.) mimikatz also calls
     // `kull_m_process_getVeryBasicModuleInformations` with the callback
-    // `kuhl_m_sekurlsa_findlibs` to initializes data for *all* supported
+    // `kuhl_m_sekurlsa_findlibs` to initialize data for *all* supported
     // security service providers / packages (in `lsassPackages`) and their
     // modules/dlls, since the code path through kuhl_m_sekurlsa_acquireLSA is
     // also used e.g. when dumping credentials.
     // Relevant for injecting credentials is only the module lsasrv where the
-    // crypto material is stored, and the modules of the specific SSP/APs
+    // crypto material is stored, and the modules of the specific SSP/APs:
     //
     //   - MSV1_0 (also lsasrv.dll, see kuhl_m_sekurlsa_msv_package in
     //     mimikatz/modules/sekurlsa/packages/kuhl_m_sekurlsa_msv1_0.c),
@@ -558,8 +558,7 @@ VOID GetTimeDateStampForModule(HANDLE hProc, LPBYTE pBase, PULONG pTimeDateStamp
     *pTimeDateStamp = imageNtHeaders.FileHeader.TimeDateStamp;
 }
 
-// Wrapper around NtQuerySystemInformation, which requires two subsequent calls
-// ...
+// Wrapper around NtQuerySystemInformation, which requires two subsequent calls ...
 VOID WrapNtQuerySystemInformation(OUT PSYSTEM_PROCESS_INFORMATION *ppProcInfo)
 {
     DWORD returnedLen = 0;
@@ -1282,7 +1281,7 @@ PVOID FindKerbCredFromAvlByLuid(HANDLE hLsass, PRTL_BALANCED_LINKS pLsaAvlTree, 
 // pthCreds: credential values that should be patched
 // pKerbAvlNode: copy of the current AVL tree node associated with the target
 //      LUID from LSASS memory (including credentials)
-// pLsaKerbAvlNode: original pointer of to AVL tree node in LSASS memory (only
+// pLsaKerbAvlNode: original pointer to AVL tree node in LSASS memory (only
 //      needed to write back the patched credentials to the correct location)
 // template: describes offsets / structure layout of data in LSASS memory
 VOID PthKerberos(PPTH_CREDS pthCreds, LPBYTE pKerbAvlNode, LPBYTE pLsaKerbAvlNode, PKERB_CREDENTIAL_TEMPLATE template)
@@ -1538,7 +1537,7 @@ VOID LogWithPrefix(LPCSTR prefix, LPCSTR pMsg, ...)
     va_end(args);
 }
 
-// The following functions deal with structures and their layout in LSASS memory.
+// The following code deals with structures and their layout in LSASS memory.
 
 // Mimikatz identifies the relevant variables and data structures in memory of
 // the LSASS process by scanning for certain byte patterns.
@@ -1701,6 +1700,8 @@ PMSV1_0_PRIMARY_CREDENTIAL_TEMPLATE GetMsv10PrimaryCredentialTemplate()
 BYTE kerberosCredentialTemplate1[] = {0x48, 0x3b, 0xfe, 0x0f, 0x84};
 BYTE kerberosCredentialTemplate2[] = {0x48, 0x8b, 0x18, 0x48, 0x8d, 0x0d};
 
+// Template for Kerberos secrets data structures in lsass memory.
+//
 // Note that overpass-the-hash and pass-the-key are both currently broken in
 // mimikatz for reasonably new operating system versions (at least when I tried
 // it it didn't work). This is also detailed in the following two still open
@@ -1721,7 +1722,7 @@ BYTE kerberosCredentialTemplate2[] = {0x48, 0x8b, 0x18, 0x48, 0x8d, 0x0d};
 // correct offsets for OS_BUILD_NUMBER_WIN_10_2004 from that patch into this
 // modified implementation.
 //
-// Note also that even still this seems to break something; maybe I didn't
+// Note also that still even this seems to break something; maybe I didn't
 // apply the patch correctly; or the structure has changed again since.
 
 // from merging KerberosReferences and kerbHelper

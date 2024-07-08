@@ -33,7 +33,7 @@ More specifically the following credentials can be re-used:
 
 - plaintext username/password (not really injecting anything, essentially `runas /netonly` while allowing non-interactive specification of the password on the commandline)
 
-- [MSV1_0 SSP/AP](https://learn.microsoft.com/en-us/windows/win32/secauthn/msv1-0-authentication-package)
+- [MSV1_0 SSP/AP](https://learn.microsoft.com/en-us/windows/win32/secauthn/msv1-0-authentication-package):
     - LM password hash (*pass-the-hash*)
     - NT password hash (`sekurlsa::pth`, *pass-the-hash*)
     - SHA1 password hash (?)
@@ -132,8 +132,8 @@ $ git clone https://github.com/stfnw/PassTheCred
 $ cd PassTheCred
 
 $ make
-x86_64-w64-mingw32-gcc -Wextra -Wall -Wpedantic -municode -DPASS_THE_CRED_GIT_COMMIT=\"edc43296174026beaec681c4462f432eecfcce23\" -o PassTheCred.o -c PassTheCred.c
-x86_64-w64-mingw32-gcc -Wextra -Wall -Wpedantic -municode -DPASS_THE_CRED_GIT_COMMIT=\"edc43296174026beaec681c4462f432eecfcce23\" -o PassTheCred.exe PassTheCred.o -lntdll -lbcrypt -lsecur32
+x86_64-w64-mingw32-gcc -Wextra -Wall -Wpedantic -municode -DPASS_THE_CRED_GIT_COMMIT=\"dd6edbc49f1b1c08c2dad1351cbfb1846430b590\" -o PassTheCred.o -c PassTheCred.c
+x86_64-w64-mingw32-gcc -Wextra -Wall -Wpedantic -municode -DPASS_THE_CRED_GIT_COMMIT=\"dd6edbc49f1b1c08c2dad1351cbfb1846430b590\" -o PassTheCred.exe PassTheCred.o -lntdll -lbcrypt -lsecur32
 rm PassTheCred.o
 ```
 
