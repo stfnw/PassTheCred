@@ -171,3 +171,8 @@ Pass-the-ticket on the other hand, just calls an existing API function of the Ke
 Furthermore, I also did not expect that pass-the-hash actually in turn requires implementing a good chunk of the crypto involved in dumping LSASS secrets -- at least the crypto for the relevant SSP/APs MSV1_0 and Kerberos --, further increasing the needed complexity.
 This is necessary since the relevant credentials that need to be patched are of course only available in protected form in memory, therefore requiring decryption before patching, and also re-encryption afterwards.
 In hindsight this is obvious.
+
+
+# Disclaimer
+
+For educational purposes only.
